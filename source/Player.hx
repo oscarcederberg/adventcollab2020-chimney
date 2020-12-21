@@ -6,9 +6,9 @@ import flixel.math.FlxPoint;
 
 class Player extends FlxSprite
 {
-	var SPEED:Int = 16 * 8;
-	var DRAG:Int = 16 * 32;
-	var MAXSPEED:Int = 16 * 8;
+	var SPEED:Int = 16 * 64;
+	var DRAG:Int = 16 * 64;
+	var MAXSPEED:Int = 16 * 12;
 
 	var parent:PlayState;
 
@@ -27,8 +27,6 @@ class Player extends FlxSprite
 		handleInput();
 
 		super.update(elapsed);
-
-		FlxG.collide(this, parent.bounds);
 	}
 
 	public function handleInput()
