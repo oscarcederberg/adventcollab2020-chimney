@@ -33,7 +33,7 @@ class PlayState extends FlxState
 
 		var bg = new FlxSprite(0, 0);
 		bg.loadGraphic("assets/images/night.png", true, 240, 270);
-		bg.animation.add("normal", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21], 2, true);
+		bg.animation.add("normal", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21], 3, true);
 		bg.animation.play('normal');
 		add(bg);
 
@@ -45,7 +45,7 @@ class PlayState extends FlxState
 		roof.loadGraphic("assets/images/rooftop.png", false, 240, 32);
 		add(roof);
 
-		this.player = new Player(32, 270 - 61);
+		this.player = new Player(32, 270 - 57);
 		add(player);
 
 		this.aliens = new FlxSpriteGroup();
@@ -80,9 +80,9 @@ class PlayState extends FlxState
 
 	public function spawnSanta(timer:FlxTimer)
 	{
-		var y = random.int(1, 80);
+		var y = random.int(2, 60);
 		var x = random.int(250, 260);
-		var speed = random.int(1, 10);
+		var speed = random.int(10, 12);
 		var time = random.int(30, 70);
 
 		if (santa != null)
