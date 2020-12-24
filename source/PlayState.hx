@@ -16,7 +16,9 @@ class PlayState extends FlxState
 	public var player:Player;
 	public var bounds:FlxGroup;
 	public var aliens:FlxSpriteGroup;
-	public var timer:FlxTimer;
+	public var alientimer:FlxTimer;
+	public var santatimer:FlxTimer;
+	public var santa:FlxSprite;
 	public var random:FlxRandom;
 
 	override public function create()
@@ -30,21 +32,30 @@ class PlayState extends FlxState
 		add(bounds);
 
 		var bg = new FlxSprite(0, 0);
-		bg.loadGraphic("assets/images/night.png", false, 240, 270);
+		bg.loadGraphic("assets/images/night.png", true, 240, 270);
+		bg.animation.add("normal", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21], 2, true);
+		bg.animation.play('normal');
 		add(bg);
+
+		var moon = new FlxSprite(0, 0);
+		moon.loadGraphic("assets/images/moon.png", true, 240, 92);
+		add(moon);
 
 		var roof = new FlxSprite(0, 270 - 32);
 		roof.loadGraphic("assets/images/rooftop.png", false, 240, 32);
 		add(roof);
 
-		this.player = new Player(32, 209);
+		this.player = new Player(32, 270 - 61);
 		add(player);
 
 		this.aliens = new FlxSpriteGroup();
 		add(aliens);
 
-		this.timer = new FlxTimer();
-		this.timer.start(3, spawnAlien, 0);
+		this.alientimer = new FlxTimer();
+		this.alientimer.start(2, spawnAlien, 0);
+
+		this.santatimer = new FlxTimer();
+		this.santatimer.start(2, spawnSanta, 1);
 
 		this.random = new FlxRandom();
 	}
@@ -54,16 +65,38 @@ class PlayState extends FlxState
 		super.update(elapsed);
 
 		FlxG.collide(player, bounds);
-		FlxG.collide(aliens, bounds);
+		// FlxG.collide(aliens, bounds);
 	}
 
 	public function spawnAlien(timer:FlxTimer)
 	{
-		var x = random.int(10, 270 - 58);
+		var x = random.int(-128, 270 + 128);
 		var y = random.int(-128, -48);
-		var amp = random.int(64, 256);
+		var amp = 3 * random.int(80, 272);
 		var freq = random.float(1 / 32, 1 / 16);
 
 		aliens.add(new Alien(x, y, amp, freq));
+	}
+
+	public function spawnSanta(timer:FlxTimer)
+	{
+		var y = random.int(1, 80);
+		var x = random.int(250, 260);
+		var speed = random.int(1, 10);
+		var time = random.int(30, 70);
+
+		if (santa != null)
+		{
+			santa.destroy();
+		}
+
+		santa = new FlxSprite(x, y);
+		santa.loadGraphic("assets/images/santa.png", true, 30, 16);
+		santa.animation.add("normal", [0, 1, 2], 3, true);
+		santa.animation.play("normal");
+		santa.velocity.x = -speed;
+		add(santa);
+
+		santatimer.start(time, spawnSanta, 1);
 	}
 }
