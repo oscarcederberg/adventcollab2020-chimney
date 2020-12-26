@@ -7,30 +7,30 @@ import flixel.math.FlxPoint;
 
 class Alien extends FlxSprite
 {
-	var GRAVITY:Int = 32;
+	var GRAVITY:Int = 48;
 
 	var parent:PlayState;
 	var x0:Float;
 	var x1:Float;
+	var dx:Float;
 	var amp:Int;
 	var freq:Float;
+	var decayfactor:Int;
 	var decay:Float;
-	var dx:Float;
-	var step:Int;
 
-	public function new(x:Float, y:Float, amp:Int, freq:Float)
+	public function new(x0:Float, x1:Float, y:Float, amp:Int, freq:Float, decayfactor:Int, decay:Float)
 	{
-		super(x, y);
+		super(x0, y);
 		parent = cast(FlxG.state);
 
-		this.x0 = x;
-		this.x1 = parent.random.int(20, 270 - 68);
-		this.dx = (x1 - x0) / (270 - 61 - 48 - y);
-		velocity.x = GRAVITY * dx;
+		this.x0 = x0;
+		this.x1 = x1;
+		this.dx = (x1 - x0) / (270 - 57);
 		this.amp = amp;
 		this.freq = freq;
-		this.decay = 0.006;
-		this.step = 0;
+		this.decayfactor = decayfactor;
+		this.decay = decay;
+
 		velocity.y = GRAVITY;
 
 		loadGraphic("assets/images/alien.png", true, 48, 48);
@@ -43,8 +43,7 @@ class Alien extends FlxSprite
 
 	override public function update(elapsed:Float):Void
 	{
-		velocity.x = dx + amp * Math.exp(-decay * step) * FlxMath.fastSin(freq * step);
-		step++;
+		x = x0 + dx * y + amp * Math.exp(decayfactor * decay * y) * FlxMath.fastSin(freq * y);
 		super.update(elapsed);
 
 		if (y > 300)

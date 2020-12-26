@@ -70,12 +70,15 @@ class PlayState extends FlxState
 
 	public function spawnAlien(timer:FlxTimer)
 	{
-		var x = random.int(-128, 270 + 128);
-		var y = random.int(-128, -48);
-		var amp = 3 * random.int(80, 272);
-		var freq = random.float(1 / 32, 1 / 16);
+		var x0 = random.int(0, 240);
+		var x1 = random.int(20, 220 - 48);
+		var y = random.int(-96, -48);
+		var amp = random.int(50, 260);
+		var freq = random.float(0.005, 0.10);
+		var decayfactor = -random.int(175, 250);
+		var decay = random.float(0.0001, 0.000155);
 
-		aliens.add(new Alien(x, y, amp, freq));
+		aliens.add(new Alien(x0, x1, y, amp, freq, decayfactor, decay));
 	}
 
 	public function spawnSanta(timer:FlxTimer)
