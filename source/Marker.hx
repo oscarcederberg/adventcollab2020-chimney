@@ -21,22 +21,22 @@ class Marker extends FlxSprite
 
 	override public function update(elapsed:Float):Void
 	{
-		this.y = alien.y;
+		y = alien.y;
 		if (alien.x < -48)
 		{
-			this.alpha = 1;
-			this.x = 0;
+			alpha = 1;
+			x = 0;
 			animation.play("left");
 		}
 		else if (alien.x > 240)
 		{
-			this.alpha = 1;
-			this.x = 240 - 48;
+			alpha = 1;
+			x = 240 - 48;
 			animation.play("right");
 		}
 		else
 		{
-			this.alpha = 0;
+			alpha = 0;
 		}
 	}
 }

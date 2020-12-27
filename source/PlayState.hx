@@ -16,6 +16,8 @@ class PlayState extends FlxState
 	public var player:Player;
 	public var bounds:FlxGroup;
 	public var aliens:FlxSpriteGroup;
+	public var alienCollisionsBoxes:FlxGroup;
+	public var hud:HUD;
 	public var alientimer:FlxTimer;
 	public var santatimer:FlxTimer;
 	public var santa:FlxSprite;
@@ -25,39 +27,35 @@ class PlayState extends FlxState
 	{
 		super.create();
 
-		this.bounds = new FlxGroup(2);
-		this.bounds.add(new FlxObject(0, -256, 10, 700));
-		this.bounds.add(new FlxObject(230, -256, 10, 700));
-		this.bounds.forEach((obj:FlxBasic) -> cast(obj, FlxObject).immovable = true);
+		bounds = new FlxGroup(2);
+		bounds.add(new FlxObject(0, -256, 10, 700));
+		bounds.add(new FlxObject(230, -256, 10, 700));
+		bounds.forEach((obj:FlxBasic) -> cast(obj, FlxObject).immovable = true);
 		add(bounds);
-
 		var bg = new FlxSprite(0, 0);
 		bg.loadGraphic("assets/images/night.png", true, 240, 270);
 		bg.animation.add("normal", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21], 3, true);
 		bg.animation.play('normal');
 		add(bg);
-
 		var moon = new FlxSprite(0, 0);
 		moon.loadGraphic("assets/images/moon.png", true, 240, 92);
 		add(moon);
-
 		var roof = new FlxSprite(0, 270 - 32);
 		roof.loadGraphic("assets/images/rooftop.png", false, 240, 32);
 		add(roof);
-
-		this.player = new Player(32, 270 - 57);
+		player = new Player(32, 270 - 57);
 		add(player);
-
-		this.aliens = new FlxSpriteGroup();
+		aliens = new FlxSpriteGroup();
 		add(aliens);
-
-		this.alientimer = new FlxTimer();
-		this.alientimer.start(2, spawnAlien, 0);
-
-		this.santatimer = new FlxTimer();
-		this.santatimer.start(2, spawnSanta, 1);
-
-		this.random = new FlxRandom();
+		alienCollisionsBoxes = new FlxGroup();
+		add(alienCollisionsBoxes);
+		hud = new HUD();
+		add(hud);
+		alientimer = new FlxTimer();
+		alientimer.start(2, spawnAlien, 0);
+		santatimer = new FlxTimer();
+		santatimer.start(2, spawnSanta, 1);
+		random = new FlxRandom();
 	}
 
 	override public function update(elapsed:Float)
@@ -65,7 +63,7 @@ class PlayState extends FlxState
 		super.update(elapsed);
 
 		FlxG.collide(player, bounds);
-		// FlxG.collide(aliens, bounds);
+		FlxG.overlap(player, alienCollisionsBoxes, (_, box:AlienCollisionBox) -> box.parent.capture());
 	}
 
 	public function spawnAlien(timer:FlxTimer)
