@@ -57,9 +57,9 @@ class Alien extends FlxSprite
 		parent.alienCollisionsBoxes.add(col_chimney);
 
 		loadGraphic("assets/images/alien.png", true, 48, 48);
-		animation.add("floating", [0, 1, 2], 3, true);
+		animation.add("floating", [0, 1, 2], 6, true);
 		animation.add("falling", [3], 1, true);
-		animation.add("captured", [4, 5, 6], 3, true);
+		animation.add("captured", [4, 5, 6], 6, false);
 
 		animation.play("floating");
 	}
