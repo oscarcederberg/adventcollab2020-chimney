@@ -44,7 +44,7 @@ class HUD extends FlxSpriteGroup
 		icons[lives].turn();
 		if (lives == 0)
 		{
-			FlxG.resetState();
+			FlxG.switchState(new EndState(parent.score));
 		}
 	}
 }
