@@ -94,7 +94,7 @@ class Alien extends FlxSprite
 		col_chimney.kill();
 		currentState = AlienState.Captured;
 		animation.play("captured");
-		new FlxTimer().start(1, score, 1);
+		new FlxTimer().start(0.5, score, 1);
 	}
 
 	public function score(timer:FlxTimer)

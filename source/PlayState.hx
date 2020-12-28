@@ -16,7 +16,8 @@ class PlayState extends FlxState
 	public var player:Player;
 	// bounds that the player collides with, the walls of the game.
 	public var bounds:FlxGroup;
-	public var aliens:FlxSpriteGroup;
+	public var agents:FlxTypedSpriteGroup<Agent>;
+	public var aliens:FlxTypedSpriteGroup<Alien>;
 	// the collision boxes that are checked against the chimney, if they overlap the alien is captured.
 	public var alienCollisionsBoxes:FlxGroup;
 	public var hud:HUD;
@@ -24,7 +25,8 @@ class PlayState extends FlxState
 	// spawn timers for aliens and santas
 	public var alientimer:FlxTimer;
 	public var santatimer:FlxTimer;
-	public var santa:FlxSprite;
+	public var agenttimer:FlxTimer;
+	public var santas:FlxSpriteGroup;
 	public var random:FlxRandom;
 
 	override public function create()
@@ -46,21 +48,31 @@ class PlayState extends FlxState
 		add(moon);
 		var roof = new FlxSprite(0, 270 - 32);
 		roof.loadGraphic("assets/images/rooftop.png", false, 240, 32);
+		santas = new FlxSpriteGroup(0, 0);
+		add(santas);
 		add(roof);
+		agents = new FlxTypedSpriteGroup<Agent>(0, 0);
+		add(agents);
 		player = new Player(32, 270 - 57);
 		add(player);
-		aliens = new FlxSpriteGroup();
+		aliens = new FlxTypedSpriteGroup<Alien>(0, 0);
 		add(aliens);
 		alienCollisionsBoxes = new FlxGroup();
 		add(alienCollisionsBoxes);
 		hud = new HUD();
 		add(hud);
+
+		random = new FlxRandom();
+
 		alientimer = new FlxTimer();
 		alientimer.start(2, spawnAlien, 0);
 		santatimer = new FlxTimer();
 		santatimer.start(2, spawnSanta, 1);
+		agenttimer = new FlxTimer();
+		agenttimer.start(Math.max(1, random.floatNormal(5, 2)), spawnAgent, 1);
 		score = 0;
-		random = new FlxRandom();
+
+		FlxG.sound.playMusic("assets/music/bg.mp3", 1, true);
 	}
 
 	override public function update(elapsed:Float)
@@ -69,6 +81,7 @@ class PlayState extends FlxState
 
 		FlxG.collide(player, bounds);
 		FlxG.overlap(player, alienCollisionsBoxes, (_, box:AlienCollisionBox) -> box.parent.capture());
+		FlxG.overlap(player, agents, (_, agent:Agent) -> agent.getHit());
 	}
 
 	public function updateScore(score:Int)
@@ -103,6 +116,17 @@ class PlayState extends FlxState
 		aliens.add(new Alien(x0, x1, y, yoffset, amp, freq, decayfactor, decay));
 	}
 
+	public function spawnAgent(timer:FlxTimer)
+	{
+		var x0 = random.int(-82, 240 + 82);
+		var x1 = random.int(10, 230 - 41);
+		var y0 = random.int(270 + 51, 270 + 102);
+		var y1 = 191;
+
+		agents.add(new Agent(x0, y0, x1, y1));
+		timer.start(Math.max(1, random.floatNormal(5, 2)), spawnAgent, 1);
+	}
+
 	public function spawnSanta(timer:FlxTimer)
 	{
 		var y = random.int(2, 60);
@@ -110,18 +134,14 @@ class PlayState extends FlxState
 		var speed = random.int(10, 12);
 		var time = random.int(30, 70);
 
-		// makes sure to kill any existing santas.
-		if (santa != null)
-		{
-			santa.destroy();
-		}
+		santas.forEachAlive((santa:FlxSprite) -> santa.kill());
 
-		santa = new FlxSprite(x, y);
+		var santa = new FlxSprite(x, y);
 		santa.loadGraphic("assets/images/santa.png", true, 30, 16);
 		santa.animation.add("normal", [0, 1, 2], 3, true);
 		santa.animation.play("normal");
 		santa.velocity.x = -speed;
-		add(santa);
+		santas.add(santa);
 
 		santatimer.start(time, spawnSanta, 1);
 	}
