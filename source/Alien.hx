@@ -17,6 +17,7 @@ enum AlienState
 class Alien extends FlxSprite
 {
 	var GRAVITY:Int = 80;
+	var SCORE:Int = 100;
 
 	var parent:PlayState;
 	var currentState:AlienState;
@@ -98,6 +99,7 @@ class Alien extends FlxSprite
 
 	public function score(timer:FlxTimer)
 	{
+		parent.updateScore(SCORE);
 		marker.kill();
 		kill();
 	}

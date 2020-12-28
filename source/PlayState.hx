@@ -14,10 +14,14 @@ import flixel.util.FlxTimer;
 class PlayState extends FlxState
 {
 	public var player:Player;
+	// bounds that the player collides with, the walls of the game.
 	public var bounds:FlxGroup;
 	public var aliens:FlxSpriteGroup;
+	// the collision boxes that are checked against the chimney, if they overlap the alien is captured.
 	public var alienCollisionsBoxes:FlxGroup;
 	public var hud:HUD;
+	public var score:Int;
+	// spawn timers for aliens and santas
 	public var alientimer:FlxTimer;
 	public var santatimer:FlxTimer;
 	public var santa:FlxSprite;
@@ -55,6 +59,7 @@ class PlayState extends FlxState
 		alientimer.start(2, spawnAlien, 0);
 		santatimer = new FlxTimer();
 		santatimer.start(2, spawnSanta, 1);
+		score = 0;
 		random = new FlxRandom();
 	}
 
@@ -66,14 +71,32 @@ class PlayState extends FlxState
 		FlxG.overlap(player, alienCollisionsBoxes, (_, box:AlienCollisionBox) -> box.parent.capture());
 	}
 
+	public function updateScore(score:Int)
+	{
+		this.score += score;
+		hud.scoreCounter.text = Std.string(this.score);
+	}
+
 	public function spawnAlien(timer:FlxTimer)
 	{
+		// x0 is the starting position of the alien in x.
+		// x1 is the proposed landing position of the alien in x.
+		// alien then calculates the difference/delta in x (dx), and makes sure that the alien moves towards it
+		// while floating down.
 		var x0 = random.int(-48, 288);
 		var x1 = random.int(20, 220 - 48);
+
 		var y = random.int(-96, -48);
+
+		// basically same as phase for the sine wave.
+		// also tweaks when the speedup for downard velocity happens.
 		var yoffset = random.int(0, 50);
+
 		var amp = random.int(50, 260);
 		var freq = random.float(0.005, 0.10);
+
+		// these two variables make sure the alien lands inside the screen by gradually decaying the sine-wave.
+		// they are pretty good as is. do not mess with them too much.
 		var decayfactor = -random.int(175, 250);
 		var decay = random.float(0.0001, 0.000155);
 
@@ -87,6 +110,7 @@ class PlayState extends FlxState
 		var speed = random.int(10, 12);
 		var time = random.int(30, 70);
 
+		// makes sure to kill any existing santas.
 		if (santa != null)
 		{
 			santa.destroy();
