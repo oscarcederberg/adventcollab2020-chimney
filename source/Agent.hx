@@ -9,6 +9,8 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 
+using flixel.util.FlxSpriteUtil;
+
 enum AgentState
 {
 	Jumping;
@@ -55,15 +57,15 @@ class Agent extends FlxSprite
 			ease: FlxEase.quintOut
 		});
 		tween.start();
-
+		this.flicker(0.8, 0.2);
 		timer = new FlxTimer();
-		timer.start(1, (_) -> land(), 1);
+		timer.start(0.8, (_) -> land(), 1);
 	}
 
 	public function land()
 	{
 		state = AgentState.Shooting;
-		timer.start(0.5, (_) -> shoot(), 1);
+		timer.start(0.3, (_) -> shoot(), 1);
 	}
 
 	public function shoot()
