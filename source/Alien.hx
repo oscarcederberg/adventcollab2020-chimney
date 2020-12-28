@@ -16,8 +16,8 @@ enum AlienState
 
 class Alien extends FlxSprite
 {
-	var GRAVITY:Int = 80;
-	var SCORE:Int = 100;
+	static final GRAVITY:Int = 80;
+	static final SCORE:Int = 500;
 
 	var parent:PlayState;
 	var currentState:AlienState;

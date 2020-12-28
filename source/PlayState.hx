@@ -48,15 +48,15 @@ class PlayState extends FlxState
 		add(moon);
 		var roof = new FlxSprite(0, 270 - 32);
 		roof.loadGraphic("assets/images/rooftop.png", false, 240, 32);
+		add(roof);
 		santas = new FlxSpriteGroup(0, 0);
 		add(santas);
-		add(roof);
-		agents = new FlxTypedSpriteGroup<Agent>(0, 0);
-		add(agents);
 		player = new Player(32, 270 - 57);
 		add(player);
 		aliens = new FlxTypedSpriteGroup<Alien>(0, 0);
 		add(aliens);
+		agents = new FlxTypedSpriteGroup<Agent>(0, 0);
+		add(agents);
 		alienCollisionsBoxes = new FlxGroup();
 		add(alienCollisionsBoxes);
 		hud = new HUD();
@@ -81,7 +81,10 @@ class PlayState extends FlxState
 
 		FlxG.collide(player, bounds);
 		FlxG.overlap(player, alienCollisionsBoxes, (_, box:AlienCollisionBox) -> box.parent.capture());
-		FlxG.overlap(player, agents, (_, agent:Agent) -> agent.getHit());
+		if (player.velocity.x != 0)
+		{
+			FlxG.overlap(player, agents, (_, agent:Agent) -> agent.getHit());
+		}
 	}
 
 	public function updateScore(score:Int)
@@ -121,7 +124,7 @@ class PlayState extends FlxState
 		var x0 = random.int(-82, 240 + 82);
 		var x1 = random.int(10, 230 - 41);
 		var y0 = random.int(270 + 51, 270 + 102);
-		var y1 = 191;
+		var y1 = random.int(191, 196);
 
 		agents.add(new Agent(x0, y0, x1, y1));
 		timer.start(Math.max(1, random.floatNormal(5, 2)), spawnAgent, 1);

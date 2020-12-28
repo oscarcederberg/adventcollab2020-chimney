@@ -18,6 +18,8 @@ enum AgentState
 
 class Agent extends FlxSprite
 {
+	static final SCORE:Int = 250;
+
 	var parent:PlayState;
 	var x1:Float;
 	var y1:Float;
@@ -80,15 +82,21 @@ class Agent extends FlxSprite
 				var random = parent.random;
 				if (parent.player.x < x)
 				{
-					velocity.set(16 * 64, -9 * 64);
+					velocity.set(random.float(10 * 64, 30 * 30), -random.float(6 * 64, 15 * 30));
+					angularVelocity = random.float(260, 720);
 				}
 				else
 				{
-					velocity.set(-16 * 64, -9 * 64);
+					velocity.set(-random.float(10 * 64, 30 * 30), -random.float(6 * 64, 15 * 30));
+					angularVelocity = -random.float(260, 720);
 				}
 				acceleration.y = 7 * 64;
 
-				timer.start(10, (_) -> kill(), 1);
+				timer.start(2, (_) ->
+				{
+					parent.updateScore(250);
+					kill();
+				}, 1);
 			}
 		}
 	}

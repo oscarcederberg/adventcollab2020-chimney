@@ -6,9 +6,9 @@ import flixel.math.FlxPoint;
 
 class Player extends FlxSprite
 {
-	var SPEED:Int = 16 * 64;
-	var DRAG:Int = 16 * 64;
-	var MAXSPEED:Int = 16 * 12;
+	static final SPEED:Int = 16 * 64;
+	static final DRAG:Int = 16 * 64;
+	static final MAXSPEED:Int = 16 * 12;
 
 	var parent:PlayState;
 
