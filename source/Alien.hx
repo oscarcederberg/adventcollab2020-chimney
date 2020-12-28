@@ -20,7 +20,7 @@ class Alien extends FlxSprite
 	static final SCORE:Int = 500;
 
 	var parent:PlayState;
-	var currentState:AlienState;
+	var state:AlienState;
 	var marker:Marker;
 
 	var x0:Float;
@@ -33,14 +33,12 @@ class Alien extends FlxSprite
 	var decay:Float;
 
 	var col_chimney:AlienCollisionBox;
-	var col_chimney_x_offset:Int = 3;
-	var col_chimney_y_offset:Int = 33;
 
 	public function new(x0:Float, x1:Float, y:Float, yoffset:Float, amp:Int, freq:Float, decayfactor:Int, decay:Float)
 	{
 		super(x0, y);
 		parent = cast(FlxG.state);
-		currentState = AlienState.Floating;
+		state = AlienState.Floating;
 		marker = new Marker(0, 0, this);
 		parent.add(this.marker);
 
@@ -53,7 +51,7 @@ class Alien extends FlxSprite
 		this.decayfactor = decayfactor;
 		this.decay = decay;
 
-		col_chimney = new AlienCollisionBox(x + col_chimney_x_offset, y + col_chimney_y_offset, 22, 11, this);
+		col_chimney = new AlienCollisionBox(x + 3, y + 33, 22, 11, this);
 		col_chimney.immovable = true;
 		parent.alienCollisionsBoxes.add(col_chimney);
 
@@ -67,18 +65,24 @@ class Alien extends FlxSprite
 
 	override public function update(elapsed:Float):Void
 	{
-		if (currentState == AlienState.Floating)
+		if (state == AlienState.Floating)
 		{
 			velocity.y = Math.max(30, GRAVITY - GRAVITY * Math.exp(-0.04 * y));
 			x = x0 + dx * y + amp * Math.exp(decayfactor * decay * (y + yoffset)) * FlxMath.fastSin(freq * (y + yoffset));
 
-			col_chimney.x = x + col_chimney_x_offset;
-			col_chimney.y = y + col_chimney_y_offset;
+			col_chimney.x = x + 3;
+			col_chimney.y = y + 33;
 		}
-		else if (currentState == AlienState.Captured)
+		else if (state == AlienState.Captured)
 		{
 			x = parent.player.x;
 			y = parent.player.y - 29;
+		}
+		else if (state == AlienState.Falling)
+		{
+			velocity.y = 3 * Math.max(30, GRAVITY - GRAVITY * Math.exp(-0.04 * y));
+			col_chimney.x = x + 13;
+			col_chimney.y = y + 31;
 		}
 
 		super.update(elapsed);
@@ -92,9 +96,18 @@ class Alien extends FlxSprite
 	public function capture()
 	{
 		col_chimney.kill();
-		currentState = AlienState.Captured;
+		state = AlienState.Captured;
 		animation.play("captured");
 		new FlxTimer().start(0.5, score, 1);
+	}
+
+	public function hit()
+	{
+		if (state == AlienState.Floating)
+		{
+			state = AlienState.Falling;
+			animation.play("falling");
+		}
 	}
 
 	public function score(timer:FlxTimer)

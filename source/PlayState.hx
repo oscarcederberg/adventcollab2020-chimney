@@ -18,6 +18,7 @@ class PlayState extends FlxState
 	public var bounds:FlxGroup;
 	public var agents:FlxTypedSpriteGroup<Agent>;
 	public var aliens:FlxTypedSpriteGroup<Alien>;
+	public var bullets:FlxTypedSpriteGroup<Bullet>;
 	// the collision boxes that are checked against the chimney, if they overlap the alien is captured.
 	public var alienCollisionsBoxes:FlxGroup;
 	public var hud:HUD;
@@ -57,6 +58,8 @@ class PlayState extends FlxState
 		add(aliens);
 		agents = new FlxTypedSpriteGroup<Agent>(0, 0);
 		add(agents);
+		bullets = new FlxTypedSpriteGroup<Bullet>(0, 0);
+		add(bullets);
 		alienCollisionsBoxes = new FlxGroup();
 		add(alienCollisionsBoxes);
 		hud = new HUD();
@@ -85,6 +88,14 @@ class PlayState extends FlxState
 		{
 			FlxG.overlap(player, agents, (_, agent:Agent) -> agent.getHit());
 		}
+		FlxG.overlap(bullets, aliens, (bullet:Bullet, alien:Alien) ->
+		{
+			if (FlxG.pixelPerfectOverlap(bullet, alien))
+			{
+				bullet.kill();
+				alien.hit();
+			}
+		});
 	}
 
 	public function updateScore(score:Int)

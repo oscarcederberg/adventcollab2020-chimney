@@ -63,12 +63,23 @@ class Agent extends FlxSprite
 	public function land()
 	{
 		state = AgentState.Shooting;
-		timer.start(2, (_) -> shoot(), 1);
+		timer.start(0.5, (_) -> shoot(), 1);
 	}
 
 	public function shoot()
 	{
-		if (state == AgentState.Shooting) {}
+		if (state == AgentState.Shooting)
+		{
+			if (facing == FlxObject.RIGHT)
+			{
+				parent.bullets.add(new Bullet(x + 27, y + 9, facing));
+			}
+			else
+			{
+				parent.bullets.add(new Bullet(x + 8, y + 9, facing));
+			}
+		}
+		timer.start(2, (_) -> shoot(), 0);
 	}
 
 	public function getHit()
@@ -91,12 +102,8 @@ class Agent extends FlxSprite
 					angularVelocity = -random.float(260, 720);
 				}
 				acceleration.y = 7 * 64;
-
-				timer.start(2, (_) ->
-				{
-					parent.updateScore(250);
-					kill();
-				}, 1);
+				parent.updateScore(250);
+				timer.start(2, (_) -> kill(), 1);
 			}
 		}
 	}
