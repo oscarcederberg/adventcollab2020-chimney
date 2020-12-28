@@ -34,6 +34,7 @@ class HUD extends FlxSpriteGroup
 
 		scoreCounter = new FlxText(240 - 128 - 4, 4, 128, "0", 16);
 		scoreCounter.alignment = "right";
+		scoreCounter.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 1, 1);
 		parent.add(scoreCounter);
 	}
 

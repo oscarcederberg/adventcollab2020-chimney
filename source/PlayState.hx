@@ -92,6 +92,7 @@ class PlayState extends FlxState
 		{
 			if (FlxG.pixelPerfectOverlap(bullet, alien))
 			{
+				FlxG.sound.play("assets/sounds/dead.mp3");
 				bullet.kill();
 				alien.hit();
 			}

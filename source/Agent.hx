@@ -70,6 +70,7 @@ class Agent extends FlxSprite
 	{
 		if (state == AgentState.Shooting)
 		{
+			FlxG.sound.play("assets/sounds/shoot.mp3");
 			if (facing == FlxObject.RIGHT)
 			{
 				parent.bullets.add(new Bullet(x + 27, y + 9, facing));
@@ -91,15 +92,15 @@ class Agent extends FlxSprite
 				state = AgentState.Dying;
 
 				var random = parent.random;
-				if (parent.player.x < x)
+				if (parent.player.velocity.x > 0)
 				{
-					velocity.set(random.float(10 * 64, 30 * 30), -random.float(6 * 64, 15 * 30));
-					angularVelocity = random.float(260, 720);
+					velocity.set(random.float(10 * 64, 30 * 30), -random.float(6 * 64, 20 * 30));
+					angularVelocity = random.float(360, 720);
 				}
 				else
 				{
-					velocity.set(-random.float(10 * 64, 30 * 30), -random.float(6 * 64, 15 * 30));
-					angularVelocity = -random.float(260, 720);
+					velocity.set(-random.float(10 * 64, 30 * 30), -random.float(6 * 64, 20 * 30));
+					angularVelocity = -random.float(360, 720);
 				}
 				acceleration.y = 7 * 64;
 				parent.updateScore(250);
