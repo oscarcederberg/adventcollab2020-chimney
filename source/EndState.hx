@@ -14,8 +14,6 @@ class EndState extends FlxState
 {
 	var score:FlxText;
 
-	// var button:FlxButton;
-
 	public function new(score:Int)
 	{
 		super();
@@ -32,47 +30,33 @@ class EndState extends FlxState
 		roof.loadGraphic("assets/images/rooftop.png", false, 240, 32);
 		add(roof);
 
-		var retryText = new FlxText();
-		retryText.scale.set(2, 2);
+		var retryText = new FlxText(0, 0, 0, "Press Z/J to Retry", 16);
 		retryText.y = (24 * 270 / 32);
-		retryText.text = "Press Z/J to Retry";
 		retryText.color = FlxColor.YELLOW;
 		retryText.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
 		retryText.screenCenter(X);
 
-		var gameOverText = new FlxText();
-		gameOverText.scale.set(1, 1);
-		gameOverText.text = "Designed by\nBrandyBuizel\n\nCoded by\nKnoseDoge\n\nMusic by\nDanFromBavaria";
+		var gameOverText = new FlxText(0, 0, 0, "Designed by\nBrandyBuizel\n\nCoded by\nKnoseDoge\n\nMusic by\nDanFromBavaria", 8);
 		gameOverText.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
 		gameOverText.screenCenter();
 		gameOverText.y += 12;
 		gameOverText.alignment = "center";
 
-		this.score = new FlxText();
-		this.score.scale.set(2, 2);
+		this.score = new FlxText(0, 0, 0, "FINAL SCORE\n" + score, 16);
 		this.score.y = 4 * 270 / 32;
-		this.score.text = "FINAL SCORE\n" + score;
 		this.score.color = FlxColor.YELLOW;
 		this.score.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
 		this.score.screenCenter(X);
 		this.score.alignment = "center";
 
-		/*
-			button = new FlxButton(0, 0, "PLAY AGAIN", clickRestart);
-			button.scale.set(2, 2);
-			button.y = 24 * 270 / 32;
-			button.screenCenter(X);
-		 */
-
 		add(retryText);
 		add(gameOverText);
 		add(this.score);
-		// add(button);
 	}
 
 	override public function update(elapsed:Float)
 	{
-		if ((FlxG.keys.anyPressed([Z, J])))
+		if ((FlxG.keys.anyJustPressed([Z, J])))
 		{
 			clickRestart();
 		}
