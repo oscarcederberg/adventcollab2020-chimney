@@ -30,8 +30,7 @@
 	<set name="BUILD_DIR" value="export" />
 	<classpath name="source" />
 	<classpath name="standAloneSource" />
-	<library name="chimney" preload="true" />
-	<assets path="assets" library="chimney" />
+	<assets path="assets" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
