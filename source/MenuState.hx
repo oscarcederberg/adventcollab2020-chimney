@@ -34,14 +34,15 @@ class MenuState extends FlxState
 		titleText.y = (6 * 270 / 32);
 		titleText.screenCenter(X);
 
-		var startText = new FlxText(0, 0, 0, "Press Z/J to Start", 16);
+		var startText = new FlxText(0, 0, 0, "Press J/Z to Start", 16);
 		startText.y = (24 * 270 / 32);
 		startText.color = FlxColor.YELLOW;
 		startText.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
 		startText.screenCenter(X);
 
 		var tutorialText = new FlxText(0, 0, 0,
-			"Catch as many alien hominids as possible\nby moving left and right.\nWatch out for agents, they'll shoot\nem down, so knock 'em out", 8);
+			"Catch as many alien hominids as possible\nby moving left and right (ARROWS or WASD).\nWatch out for agents, they'll shoot\nem down, so knock 'em out!",
+			8);
 		tutorialText.scale.set(1, 1);
 		tutorialText.y = (16 * 270 / 32);
 		tutorialText.color = FlxColor.YELLOW;

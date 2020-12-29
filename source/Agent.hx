@@ -57,7 +57,7 @@ class Agent extends FlxSprite
 			ease: FlxEase.quintOut
 		});
 		tween.start();
-		this.flicker(0.7, 0.1);
+		this.flicker(0.6, 0.1);
 		timer = new FlxTimer();
 		timer.start(0.6, (_) -> land(), 1);
 	}

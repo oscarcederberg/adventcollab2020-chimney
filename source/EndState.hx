@@ -30,7 +30,7 @@ class EndState extends FlxState
 		roof.loadGraphic("assets/images/rooftop.png", false, 240, 32);
 		add(roof);
 
-		var retryText = new FlxText(0, 0, 0, "Press Z/J to Retry", 16);
+		var retryText = new FlxText(0, 0, 0, "Press J/Z to Retry", 16);
 		retryText.y = (24 * 270 / 32);
 		retryText.color = FlxColor.YELLOW;
 		retryText.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
