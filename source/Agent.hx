@@ -52,12 +52,12 @@ class Agent extends FlxSprite
 			flipX = true;
 		}
 
-		tween = FlxTween.quadMotion(this, x0, y0, (x0 + x1) / 2, parent.random.int(80, 120), x1, y1, 1, true, {
+		tween = FlxTween.quadMotion(this, x0, y0, (x0 + x1) / 2, parent.random.int(80, 12), x1, y1, 1, true, {
 			type: FlxTweenType.ONESHOT,
 			ease: FlxEase.quintOut
 		});
 		tween.start();
-		this.flicker(0.8, 0.2);
+		this.flicker(0.7, 0.1);
 		timer = new FlxTimer();
 		timer.start(0.8, (_) -> land(), 1);
 	}
@@ -65,14 +65,15 @@ class Agent extends FlxSprite
 	public function land()
 	{
 		state = AgentState.Shooting;
-		timer.start(0.3, (_) -> shoot(), 1);
+		timer.start(0.4, (_) -> shoot(), 1);
 	}
 
 	public function shoot()
 	{
 		if (state == AgentState.Shooting)
 		{
-			FlxG.sound.play("assets/sounds/shoot.mp3");
+			FlxG.sound.play('assets/sounds/pew' + FlxG.random.int(1, 6) + '.mp3');
+
 			if (facing == FlxObject.RIGHT)
 			{
 				parent.bullets.add(new Bullet(x + 27, y + 9, facing));
@@ -82,7 +83,7 @@ class Agent extends FlxSprite
 				parent.bullets.add(new Bullet(x + 8, y + 9, facing));
 			}
 		}
-		timer.start(2, (_) -> shoot(), 0);
+		timer.start(1, (_) -> shoot(), 0);
 	}
 
 	public function getHit()
@@ -93,16 +94,18 @@ class Agent extends FlxSprite
 			{
 				state = AgentState.Dying;
 
+				FlxG.sound.play("assets/sounds/smack.mp3");
+
 				var random = parent.random;
 				if (parent.player.velocity.x > 0)
 				{
 					velocity.set(random.float(10 * 64, 30 * 30), -random.float(6 * 64, 20 * 30));
-					angularVelocity = random.float(360, 720);
+					angularVelocity = random.float(640, 1280);
 				}
 				else
 				{
 					velocity.set(-random.float(10 * 64, 30 * 30), -random.float(6 * 64, 20 * 30));
-					angularVelocity = -random.float(360, 720);
+					angularVelocity = -random.float(640, 1280);
 				}
 				acceleration.y = 7 * 64;
 				parent.updateScore(250);
