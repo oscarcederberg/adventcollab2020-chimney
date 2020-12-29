@@ -30,6 +30,6 @@ class BootState extends flixel.FlxState
 	{
 		super.update(elapsed);
 		
-		FlxG.switchState(new PlayState());
+		FlxG.switchState(new MenuState());
 	}
 }

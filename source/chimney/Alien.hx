@@ -111,7 +111,7 @@ class Alien extends FlxSprite
 		col_chimney.kill();
 		state = AlienState.Captured;
 		animation.play("captured");
-		FlxG.sound.play(Global.asset("/sounds/score.mp3"));
+		FlxG.sound.play(Global.asset("assets/sounds/score.mp3"));
 		new FlxTimer().start(0.5, score, 1);
 	}
 
