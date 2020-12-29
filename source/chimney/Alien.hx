@@ -1,4 +1,4 @@
-package;
+package chimney;
 
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -6,6 +6,12 @@ import flixel.FlxSprite;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.util.FlxTimer;
+
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 enum AlienState
 {
@@ -37,7 +43,7 @@ class Alien extends FlxSprite
 	public function new(x0:Float, x1:Float, y:Float, yoffset:Float, amp:Int, freq:Float, decayfactor:Int, decay:Float)
 	{
 		super(x0, y);
-		parent = cast(FlxG.state);
+		parent = cast(Global.state);
 		state = AlienState.Floating;
 		marker = new Marker(0, 0, this);
 		parent.add(this.marker);

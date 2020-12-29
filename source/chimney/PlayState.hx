@@ -1,4 +1,4 @@
-package;
+package chimney;
 
 import flixel.FlxBasic;
 import flixel.FlxG;
@@ -65,7 +65,7 @@ class PlayState extends FlxState
 		hud = new HUD();
 		add(hud);
 
-		random = new FlxRandom();
+		random = FlxG.random;
 
 		alientimer = new FlxTimer();
 		alientimer.start(2, spawnAlien, 0);

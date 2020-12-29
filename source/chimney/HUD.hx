@@ -1,4 +1,4 @@
-package;
+package chimney;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -7,6 +7,12 @@ import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxBitmapText;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 using flixel.util.FlxSpriteUtil;
 
@@ -22,7 +28,7 @@ class HUD extends FlxSpriteGroup
 	{
 		super();
 
-		parent = cast(FlxG.state);
+		parent = cast(Global.state);
 		icons = new Array<LifeIcon>();
 		lives = 4;
 		for (i in 0...lives)

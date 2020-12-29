@@ -29,6 +29,7 @@
 
 	<set name="BUILD_DIR" value="export" />
 	<classpath name="source" />
+	<classpath name="standAloneSource" />
 	<assets path="assets" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
@@ -46,6 +47,8 @@
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
+	<define name="STAND_ALONE" />
+	
 	<!--Enable the Flixel core recording system-->
 	<!--<haxedef name="FLX_RECORD" />-->
 

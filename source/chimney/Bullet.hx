@@ -1,4 +1,4 @@
-package;
+package chimney;
 
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -7,6 +7,12 @@ import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.util.FlxTimer;
 
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
+
 class Bullet extends FlxSprite
 {
 	var parent:PlayState;
@@ -14,7 +20,7 @@ class Bullet extends FlxSprite
 	public function new(x:Float, y:Float, facing:Int)
 	{
 		super(x, y);
-		parent = cast(FlxG.state);
+		parent = cast(Global.state);
 
 		this.facing = facing;
 		loadGraphic("assets/images/bullet.png", false, 6, 6);

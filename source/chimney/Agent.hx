@@ -1,4 +1,4 @@
-package;
+package chimney;
 
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -8,6 +8,12 @@ import flixel.math.FlxPoint;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
+
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 using flixel.util.FlxSpriteUtil;
 
@@ -32,7 +38,7 @@ class Agent extends FlxSprite
 	public function new(x0:Float, y0:Float, x1:Float, y1:Float)
 	{
 		super(x0, y0);
-		parent = cast(FlxG.state);
+		parent = cast(Global.state);
 		this.x1 = x1;
 		this.y1 = y1;
 		state = AgentState.Jumping;
