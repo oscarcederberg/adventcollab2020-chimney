@@ -28,8 +28,7 @@ class MenuState extends FlxState
 		roof.loadGraphic("assets/images/rooftop.png", false, 240, 32);
 		add(roof);
 
-		var titleText = new FlxText(0, 0, 0, "ALIEN HOMINID DROP", 16);
-		titleText.text = "ALIEN HOMINID DROP";
+		var titleText = new FlxText(0, 0, 0, "HOLIDAY HOMINID DROP", 16);
 		titleText.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
 		titleText.y = (6 * 270 / 32);
 		titleText.screenCenter(X);
