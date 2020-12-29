@@ -11,6 +11,12 @@ import flixel.math.FlxRandom;
 import flixel.util.FlxCollision;
 import flixel.util.FlxTimer;
 
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
+
 class PlayState extends FlxState
 {
 	public var player:Player;
@@ -40,15 +46,15 @@ class PlayState extends FlxState
 		bounds.forEach((obj:FlxBasic) -> cast(obj, FlxObject).immovable = true);
 		add(bounds);
 		var bg = new FlxSprite(0, 0);
-		bg.loadGraphic("assets/images/night.png", true, 240, 270);
+		bg.loadGraphic(Global.asset("assets/images/night.png"), true, 240, 270);
 		bg.animation.add("normal", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21], 3, true);
 		bg.animation.play('normal');
 		add(bg);
 		var moon = new FlxSprite(0, 0);
-		moon.loadGraphic("assets/images/moon.png", true, 240, 92);
+		moon.loadGraphic(Global.asset("assets/images/moon.png"), true, 240, 92);
 		add(moon);
 		var roof = new FlxSprite(0, 270 - 32);
-		roof.loadGraphic("assets/images/rooftop.png", false, 240, 32);
+		roof.loadGraphic(Global.asset("assets/images/rooftop.png"), false, 240, 32);
 		add(roof);
 		santas = new FlxSpriteGroup(0, 0);
 		add(santas);
@@ -75,7 +81,7 @@ class PlayState extends FlxState
 		agenttimer.start(Math.max(1, random.floatNormal(5, 2)), spawnAgent, 1);
 		score = 0;
 
-		FlxG.sound.playMusic("assets/music/bg.mp3", 1, true);
+		FlxG.sound.playMusic(Global.asset("assets/music/bg.mp3"), 1, true);
 	}
 
 	override public function update(elapsed:Float)
@@ -92,7 +98,7 @@ class PlayState extends FlxState
 		{
 			if (FlxG.pixelPerfectOverlap(bullet, alien))
 			{
-				//FlxG.sound.play("assets/sounds/dead.mp3");
+				//FlxG.sound.play(Global.asset("assets/sounds/dead.mp3"));
 				bullet.kill();
 				alien.hit();
 			}
@@ -152,7 +158,7 @@ class PlayState extends FlxState
 		santas.forEachAlive((santa:FlxSprite) -> santa.kill());
 
 		var santa = new FlxSprite(x, y);
-		santa.loadGraphic("assets/images/santa.png", true, 30, 16);
+		santa.loadGraphic(Global.asset("assets/images/santa.png"), true, 30, 16);
 		santa.animation.add("normal", [0, 1, 2], 3, true);
 		santa.animation.play("normal");
 		santa.velocity.x = -speed;

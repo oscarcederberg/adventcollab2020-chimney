@@ -23,7 +23,7 @@ class Bullet extends FlxSprite
 		parent = cast(Global.state);
 
 		this.facing = facing;
-		loadGraphic("assets/images/bullet.png", false, 6, 6);
+		loadGraphic(Global.asset("assets/images/bullet.png"), false, 6, 6);
 		if (facing == FlxObject.RIGHT)
 		{
 			flipX = true;

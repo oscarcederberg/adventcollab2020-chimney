@@ -61,7 +61,7 @@ class Alien extends FlxSprite
 		col_chimney.immovable = true;
 		parent.alienCollisionsBoxes.add(col_chimney);
 
-		loadGraphic("assets/images/alien.png", true, 48, 48);
+		loadGraphic(Global.asset("assets/images/alien.png"), true, 48, 48);
 		animation.add("floating", [0, 1, 2], 6, true);
 		animation.add("falling", [3], 1, true);
 		animation.add("captured", [4, 5, 6], 6, false);
@@ -111,13 +111,13 @@ class Alien extends FlxSprite
 		col_chimney.kill();
 		state = AlienState.Captured;
 		animation.play("captured");
-		FlxG.sound.play("assets/sounds/score.mp3");
+		FlxG.sound.play(Global.asset("/sounds/score.mp3"));
 		new FlxTimer().start(0.5, score, 1);
 	}
 
 	public function hit()
 	{
-		FlxG.sound.play("assets/sounds/fell.mp3");
+		FlxG.sound.play(Global.asset("assets/sounds/fell.mp3"));
 
 		if (state == AlienState.Floating)
 		{

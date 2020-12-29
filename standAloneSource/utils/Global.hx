@@ -23,4 +23,6 @@ class Global
     {
         FlxG.switchState(state);
     }
+    
+    inline static public function asset(path:String) return path;
 }

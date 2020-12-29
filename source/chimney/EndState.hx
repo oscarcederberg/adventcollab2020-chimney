@@ -33,15 +33,15 @@ class EndState extends FlxState
 	override function create()
 	{
 		var bg = new FlxSprite(0, 0);
-		bg.loadGraphic("assets/images/night.png", true, 240, 270);
+		bg.loadGraphic(Global.asset("assets/images/night.png"), true, 240, 270);
 		bg.animation.add("normal", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21], 3, true);
 		bg.animation.play('normal');
 		add(bg);
 		var moon = new FlxSprite(0, 0);
-		moon.loadGraphic("assets/images/moon.png", true, 240, 92);
+		moon.loadGraphic(Global.asset("assets/images/moon.png"), true, 240, 92);
 		add(moon);
 		var roof = new FlxSprite(0, 270 - 32);
-		roof.loadGraphic("assets/images/rooftop.png", false, 240, 32);
+		roof.loadGraphic(Global.asset("assets/images/rooftop.png"), false, 240, 32);
 		add(roof);
 
 		var retryText = new FlxText();

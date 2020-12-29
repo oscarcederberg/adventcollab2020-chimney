@@ -5,6 +5,12 @@ import flixel.FlxSprite;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
+
 class Marker extends FlxSprite
 {
 	var alien:Alien;
@@ -14,7 +20,7 @@ class Marker extends FlxSprite
 		super(x, y);
 		this.alien = alien;
 
-		loadGraphic("assets/images/marker.png", true, 48, 48);
+		loadGraphic(Global.asset("assets/images/marker.png"), true, 48, 48);
 		animation.add("right", [0, 1], 4, true);
 		animation.add("left", [2, 3], 4, true);
 	}

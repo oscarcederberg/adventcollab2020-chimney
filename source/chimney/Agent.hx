@@ -52,7 +52,7 @@ class Agent extends FlxSprite
 			this.facing = FlxObject.LEFT;
 		}
 
-		loadGraphic("assets/images/fbi.png", false, 41, 51);
+		loadGraphic(Global.asset("assets/images/fbi.png"), false, 41, 51);
 		if (this.facing == FlxObject.RIGHT)
 		{
 			flipX = true;
@@ -78,7 +78,7 @@ class Agent extends FlxSprite
 	{
 		if (state == AgentState.Shooting)
 		{
-			FlxG.sound.play('assets/sounds/pew' + FlxG.random.int(1, 6) + '.mp3');
+			FlxG.sound.play(Global.asset('assets/sounds/pew' + FlxG.random.int(1, 6) + '.mp3'));
 
 			if (facing == FlxObject.RIGHT)
 			{
@@ -100,7 +100,7 @@ class Agent extends FlxSprite
 			{
 				state = AgentState.Dying;
 
-				FlxG.sound.play("assets/sounds/smack.mp3");
+				FlxG.sound.play(Global.asset("assets/sounds/smack.mp3"));
 
 				var random = parent.random;
 				if (parent.player.velocity.x > 0)

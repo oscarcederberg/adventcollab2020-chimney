@@ -25,7 +25,7 @@ class Player extends FlxSprite
 		super(x, y);
 		parent = cast(Global.state);
 
-		loadGraphic("assets/images/chimney.png", false, 32, 32);
+		loadGraphic(Global.asset("assets/images/chimney.png"), false, 32, 32);
 	}
 
 	override public function update(elapsed:Float):Void
