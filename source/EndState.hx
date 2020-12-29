@@ -13,7 +13,8 @@ import flixel.util.FlxTimer;
 class EndState extends FlxState
 {
 	var score:FlxText;
-	//var button:FlxButton;
+
+	// var button:FlxButton;
 
 	public function new(score:Int)
 	{
@@ -34,19 +35,19 @@ class EndState extends FlxState
 		var retryText = new FlxText();
 		retryText.scale.set(2, 2);
 		retryText.y = (24 * 270 / 32);
-		retryText.text = "Press Z to Retry";
+		retryText.text = "Press Z/J to Retry";
 		retryText.color = FlxColor.YELLOW;
 		retryText.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
 		retryText.screenCenter(X);
 
 		var gameOverText = new FlxText();
 		gameOverText.scale.set(1, 1);
-		gameOverText.text = "Game by\nBrandyBuizel\nand\nKnoseDoge\n\nMusic by\nDanFromBavaria";
+		gameOverText.text = "Designed by\nBrandyBuizel\n\nCoded by\nKnoseDoge\n\nMusic by\nDanFromBavaria";
 		gameOverText.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
 		gameOverText.screenCenter();
 		gameOverText.y += 12;
 		gameOverText.alignment = "center";
-		
+
 		this.score = new FlxText();
 		this.score.scale.set(2, 2);
 		this.score.y = 4 * 270 / 32;
@@ -55,23 +56,23 @@ class EndState extends FlxState
 		this.score.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
 		this.score.screenCenter(X);
 		this.score.alignment = "center";
-		
+
 		/*
-		button = new FlxButton(0, 0, "PLAY AGAIN", clickRestart);
-		button.scale.set(2, 2);
-		button.y = 24 * 270 / 32;
-		button.screenCenter(X);
-		*/
+			button = new FlxButton(0, 0, "PLAY AGAIN", clickRestart);
+			button.scale.set(2, 2);
+			button.y = 24 * 270 / 32;
+			button.screenCenter(X);
+		 */
 
 		add(retryText);
 		add(gameOverText);
 		add(this.score);
-		//add(button);
+		// add(button);
 	}
 
 	override public function update(elapsed:Float)
 	{
-		if((FlxG.keys.pressed.Z))
+		if ((FlxG.keys.anyPressed([Z, J])))
 		{
 			clickRestart();
 		}
