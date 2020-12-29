@@ -1,4 +1,4 @@
-package;
+package chimney;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -7,6 +7,12 @@ import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxBitmapText;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 using flixel.util.FlxSpriteUtil;
 
@@ -22,20 +28,20 @@ class HUD extends FlxSpriteGroup
 	{
 		super();
 
-		parent = cast(FlxG.state);
+		parent = cast(Global.state);
 		icons = new Array<LifeIcon>();
 		lives = 4;
 		for (i in 0...lives)
 		{
 			var icon = new LifeIcon(i * 28, 0);
 			icons.push(icon);
-			parent.add(icon);
+			add(icon);
 		}
 
 		scoreCounter = new FlxText(240 - 128 - 4, 4, 128, "0", 16);
 		scoreCounter.alignment = "right";
 		scoreCounter.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 1, 1);
-		parent.add(scoreCounter);
+		add(scoreCounter);
 	}
 
 	public function hit()
@@ -44,7 +50,10 @@ class HUD extends FlxSpriteGroup
 		icons[lives].turn();
 		if (lives == 0)
 		{
-			FlxG.switchState(new EndState(parent.score));
+			#if ADVENT
+			data.NGio.postPlayerHiscore("chimney", parent.score);
+			#end
+			Global.switchState(new EndState(parent.score));
 		}
 	}
 }

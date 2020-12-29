@@ -1,8 +1,16 @@
-package;
+package chimney;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
+
+import ui.Controls;
+
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 class Player extends FlxSprite
 {
@@ -15,9 +23,9 @@ class Player extends FlxSprite
 	public function new(x:Float, y:Float)
 	{
 		super(x, y);
-		parent = cast(FlxG.state);
+		parent = cast(Global.state);
 
-		loadGraphic("assets/images/chimney.png", false, 32, 32);
+		loadGraphic(Global.asset("assets/images/chimney.png"), false, 32, 32);
 	}
 
 	override public function update(elapsed:Float):Void
@@ -31,8 +39,8 @@ class Player extends FlxSprite
 
 	public function handleInput()
 	{
-		var _left:Bool = FlxG.keys.anyPressed([LEFT, A]);
-		var _right:Bool = FlxG.keys.anyPressed([RIGHT, D]);
+		var _left:Bool = Controls.pressed.LEFT;
+		var _right:Bool = Controls.pressed.RIGHT;
 
 		if (_left == _right)
 		{

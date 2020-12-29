@@ -1,4 +1,4 @@
-package;
+package chimney;
 
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -6,6 +6,12 @@ import flixel.FlxSprite;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.util.FlxTimer;
+
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 enum AlienState
 {
@@ -37,7 +43,7 @@ class Alien extends FlxSprite
 	public function new(x0:Float, x1:Float, y:Float, yoffset:Float, amp:Int, freq:Float, decayfactor:Int, decay:Float)
 	{
 		super(x0, y);
-		parent = cast(FlxG.state);
+		parent = cast(Global.state);
 		state = AlienState.Floating;
 		marker = new Marker(0, 0, this);
 		parent.add(this.marker);
@@ -55,7 +61,7 @@ class Alien extends FlxSprite
 		col_chimney.immovable = true;
 		parent.alienCollisionsBoxes.add(col_chimney);
 
-		loadGraphic("assets/images/alien.png", true, 48, 48);
+		loadGraphic(Global.asset("assets/images/alien.png"), true, 48, 48);
 		animation.add("floating", [0, 1, 2], 6, true);
 		animation.add("falling", [3], 1, true);
 		animation.add("captured", [4, 5, 6], 6, false);
@@ -105,13 +111,13 @@ class Alien extends FlxSprite
 		col_chimney.kill();
 		state = AlienState.Captured;
 		animation.play("captured");
-		FlxG.sound.play("assets/sounds/score.mp3");
+		FlxG.sound.play(Global.asset("assets/sounds/score.mp3"));
 		new FlxTimer().start(0.5, score, 1);
 	}
 
 	public function hit()
 	{
-		FlxG.sound.play("assets/sounds/fell.mp3");
+		FlxG.sound.play(Global.asset("assets/sounds/fell.mp3"));
 
 		if (state == AlienState.Floating)
 		{
