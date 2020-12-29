@@ -59,7 +59,7 @@ class Agent extends FlxSprite
 		tween.start();
 		this.flicker(0.7, 0.1);
 		timer = new FlxTimer();
-		timer.start(0.8, (_) -> land(), 1);
+		timer.start(0.6, (_) -> land(), 1);
 	}
 
 	public function land()

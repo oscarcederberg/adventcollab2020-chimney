@@ -84,7 +84,7 @@ class PlayState extends FlxState
 
 		FlxG.collide(player, bounds);
 		FlxG.overlap(player, alienCollisionsBoxes, (_, box:AlienCollisionBox) -> box.parent.capture());
-		if (player.velocity.x > 6)
+		if (player.velocity.x > 4)
 		{
 			FlxG.overlap(player, agents, (_, agent:Agent) -> agent.getHit());
 		}
