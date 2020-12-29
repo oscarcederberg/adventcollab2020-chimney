@@ -50,7 +50,10 @@ class HUD extends FlxSpriteGroup
 		icons[lives].turn();
 		if (lives == 0)
 		{
-			FlxG.switchState(new EndState(parent.score));
+			#if ADVENT
+			data.NGio.postPlayerHiscore("chimney", parent.score);
+			#end
+			Global.switchState(new EndState(parent.score));
 		}
 	}
 }
