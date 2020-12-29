@@ -1,12 +1,14 @@
 package chimney;
 
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.text.FlxBitmapText;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
+import flixel.util.FlxAxes;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
@@ -18,9 +20,9 @@ import utils.Global;
 
 class MenuState extends FlxState
 {
-	public function new()
+	override function create()
 	{
-		super();
+		super.create();
 
 		var bg = new FlxSprite(0, 0);
 		bg.loadGraphic(Global.asset("assets/images/night.png"), true, 240, 270);
@@ -37,13 +39,13 @@ class MenuState extends FlxState
 		var titleText = new FlxText(0, 0, 0, "HOLIDAY HOMINID DROP", 16);
 		titleText.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
 		titleText.y = (6 * 270 / 32);
-		titleText.screenCenter(X);
+		screenCenter(titleText, X);
 
 		var startText = new FlxText(0, 0, 0, "Press J/Z to Start", 16);
 		startText.y = (24 * 270 / 32);
 		startText.color = FlxColor.YELLOW;
 		startText.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
-		startText.screenCenter(X);
+		screenCenter(startText, X);
 
 		var tutorialText = new FlxText(0, 0, 0,
 			"Catch as many alien hominids as possible\nby moving left and right (ARROWS or WASD).\nWatch out for agents, they'll shoot\nem down, so knock 'em out!",
@@ -52,7 +54,7 @@ class MenuState extends FlxState
 		tutorialText.y = (16 * 270 / 32);
 		tutorialText.color = FlxColor.YELLOW;
 		tutorialText.setBorderStyle(OUTLINE, FlxColor.BLACK, 1, 1);
-		tutorialText.screenCenter(X);
+		screenCenter(tutorialText, X);
 		tutorialText.alignment = "center";
 
 		add(titleText);
@@ -62,7 +64,7 @@ class MenuState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
-		if ((FlxG.keys.anyJustPressed([Z, J])))
+		if ((Controls.justPressed.A)
 		{
 			clickStart();
 		}
@@ -70,6 +72,30 @@ class MenuState extends FlxState
 
 	function clickStart()
 	{
-		FlxG.switchState(new PlayState());
+		Global.switchState(new PlayState());
+	}
+	
+	inline function screenCenter(obj:FlxObject, ?axes:FlxAxes)
+	{
+		switch (axes)
+		{
+			case null | XY:
+				screenCenterX(obj);
+				screenCenterY(obj);
+			case X:
+				screenCenterX(obj);
+			case Y:
+				screenCenterY(obj);
+		}
+	}
+	
+	inline function screenCenterX(obj:FlxObject)
+	{
+		obj.x = (Global.width - obj.width) / 2;
+	}
+	
+	inline function screenCenterY(obj:FlxObject)
+	{
+		obj.y = (Global.height - obj.height) / 2;
 	}
 }
