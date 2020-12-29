@@ -12,6 +12,7 @@ import flixel.util.FlxAxes;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
+import ui.Controls;
 #if ADVENT
 import utils.OverlayGlobal as Global;
 #else
@@ -64,7 +65,7 @@ class MenuState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
-		if ((Controls.justPressed.A)
+		if (Controls.justPressed.A)
 		{
 			clickStart();
 		}
