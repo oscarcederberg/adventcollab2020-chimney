@@ -84,7 +84,7 @@ class PlayState extends FlxState
 
 		FlxG.collide(player, bounds);
 		FlxG.overlap(player, alienCollisionsBoxes, (_, box:AlienCollisionBox) -> box.parent.capture());
-		if (player.velocity.x != 0)
+		if (player.velocity.x > 4)
 		{
 			FlxG.overlap(player, agents, (_, agent:Agent) -> agent.getHit());
 		}
@@ -92,7 +92,7 @@ class PlayState extends FlxState
 		{
 			if (FlxG.pixelPerfectOverlap(bullet, alien))
 			{
-				FlxG.sound.play("assets/sounds/dead.mp3");
+				//FlxG.sound.play("assets/sounds/dead.mp3");
 				bullet.kill();
 				alien.hit();
 			}

@@ -14,7 +14,7 @@ import utils.Global;
 
 class Player extends FlxSprite
 {
-	static final SPEED:Int = 16 * 64;
+	static final SPEED:Int = 16 * 32;
 	static final DRAG:Int = 16 * 64;
 	static final MAXSPEED:Int = 16 * 12;
 

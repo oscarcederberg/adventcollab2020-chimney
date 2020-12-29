@@ -78,6 +78,13 @@ class Alien extends FlxSprite
 
 			col_chimney.x = x + 3;
 			col_chimney.y = y + 33;
+
+			//When it's too late to save them
+			if (y > 220)
+			{
+				hit();
+				y -= 35;
+			}
 		}
 		else if (state == AlienState.Captured)
 		{
@@ -110,6 +117,8 @@ class Alien extends FlxSprite
 
 	public function hit()
 	{
+		FlxG.sound.play("assets/sounds/fell.mp3");
+
 		if (state == AlienState.Floating)
 		{
 			state = AlienState.Falling;
