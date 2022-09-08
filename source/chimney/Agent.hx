@@ -45,15 +45,15 @@ class Agent extends FlxSprite
 
 		if (x1 + 41 / 2 < 240 / 2)
 		{
-			this.facing = FlxObject.RIGHT;
+			this.facing = RIGHT;
 		}
 		else
 		{
-			this.facing = FlxObject.LEFT;
+			this.facing = LEFT;
 		}
 
 		loadGraphic(Global.asset("assets/images/fbi.png"), false, 41, 51);
-		if (this.facing == FlxObject.RIGHT)
+		if (this.facing == RIGHT)
 		{
 			flipX = true;
 		}
@@ -80,7 +80,7 @@ class Agent extends FlxSprite
 		{
 			FlxG.sound.play(Global.asset('assets/sounds/pew' + FlxG.random.int(1, 6) + '.mp3'));
 
-			if (facing == FlxObject.RIGHT)
+			if (facing == RIGHT)
 			{
 				parent.bullets.add(new Bullet(x + 27, y + 9, facing));
 			}

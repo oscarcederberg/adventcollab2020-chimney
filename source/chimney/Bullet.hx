@@ -6,6 +6,7 @@ import flixel.FlxSprite;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.util.FlxTimer;
+import flixel.util.FlxDirectionFlags;
 
 #if ADVENT
 import utils.OverlayGlobal as Global;
@@ -17,14 +18,14 @@ class Bullet extends FlxSprite
 {
 	var parent:PlayState;
 
-	public function new(x:Float, y:Float, facing:Int)
+	public function new(x:Float, y:Float, facing:FlxDirectionFlags)
 	{
 		super(x, y);
 		parent = cast(Global.state);
 
 		this.facing = facing;
 		loadGraphic(Global.asset("assets/images/bullet.png"), false, 6, 6);
-		if (facing == FlxObject.RIGHT)
+		if (facing == RIGHT)
 		{
 			flipX = true;
 			velocity.set(192, -192);

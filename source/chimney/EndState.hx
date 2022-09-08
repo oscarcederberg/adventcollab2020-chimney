@@ -69,11 +69,12 @@ class EndState extends FlxState
 		super.create();
 	}
 	
-	inline function screenCenter(obj:FlxObject, ?axes:FlxAxes)
+	inline function screenCenter(obj:FlxObject, axes = FlxAxes.XY)
 	{
 		switch (axes)
 		{
-			case null | XY:
+			case NONE:
+			case XY:
 				screenCenterX(obj);
 				screenCenterY(obj);
 			case X:
