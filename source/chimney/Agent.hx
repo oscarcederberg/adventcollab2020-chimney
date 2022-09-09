@@ -1,4 +1,4 @@
-package;
+package chimney;
 
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -8,6 +8,12 @@ import flixel.math.FlxPoint;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
+
+#if ADVENT
+import utils.OverlayGlobal as Global;
+#else
+import utils.Global;
+#end
 
 using flixel.util.FlxSpriteUtil;
 
@@ -32,22 +38,22 @@ class Agent extends FlxSprite
 	public function new(x0:Float, y0:Float, x1:Float, y1:Float)
 	{
 		super(x0, y0);
-		parent = cast(FlxG.state);
+		parent = cast(Global.state);
 		this.x1 = x1;
 		this.y1 = y1;
 		state = AgentState.Jumping;
 
 		if (x1 + 41 / 2 < 240 / 2)
 		{
-			this.facing = FlxObject.RIGHT;
+			this.facing = RIGHT;
 		}
 		else
 		{
-			this.facing = FlxObject.LEFT;
+			this.facing = LEFT;
 		}
 
-		loadGraphic("assets/images/fbi.png", false, 41, 51);
-		if (this.facing == FlxObject.RIGHT)
+		loadGraphic(Global.asset("assets/images/fbi.png"), false, 41, 51);
+		if (this.facing == RIGHT)
 		{
 			flipX = true;
 		}
@@ -72,9 +78,9 @@ class Agent extends FlxSprite
 	{
 		if (state == AgentState.Shooting)
 		{
-			FlxG.sound.play('assets/sounds/pew' + FlxG.random.int(1, 6) + '.mp3');
+			FlxG.sound.play(Global.asset('assets/sounds/pew' + FlxG.random.int(1, 6) + '.mp3'));
 
-			if (facing == FlxObject.RIGHT)
+			if (facing == RIGHT)
 			{
 				parent.bullets.add(new Bullet(x + 27, y + 9, facing));
 			}
@@ -94,7 +100,7 @@ class Agent extends FlxSprite
 			{
 				state = AgentState.Dying;
 
-				FlxG.sound.play("assets/sounds/smack.mp3");
+				FlxG.sound.play(Global.asset("assets/sounds/smack.mp3"));
 
 				var random = parent.random;
 				if (parent.player.velocity.x > 0)
