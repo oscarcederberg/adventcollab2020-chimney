@@ -80,6 +80,7 @@ class MenuState extends FlxState
 	{
 		switch (axes)
 		{
+			case NONE:
 			case null | XY:
 				screenCenterX(obj);
 				screenCenterY(obj);
